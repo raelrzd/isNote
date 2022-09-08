@@ -27,8 +27,12 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
     @NonNull
     @Override
     public ListaNotasAdapter.NotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View viewCriada = LayoutInflater.from(context).inflate(R.layout.item_nota, parent, false);
+        View viewCriada = criaView(parent);
         return new NotaViewHolder(viewCriada);
+    }
+
+    private View criaView(@NonNull ViewGroup parent) {
+        return LayoutInflater.from(context).inflate(R.layout.item_nota, parent, false);
     }
 
     @Override
@@ -55,12 +59,14 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         }
 
         public void vincula(Nota nota) {
+            preencheCampos(nota);
+        }
+
+        private void preencheCampos(Nota nota) {
             titulo.setText(nota.getTitulo());
             descricao.setText(nota.getDescricao());
         }
-
     }
-
 }
 
 
