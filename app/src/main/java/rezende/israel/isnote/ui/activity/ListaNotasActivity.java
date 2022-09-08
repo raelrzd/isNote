@@ -3,6 +3,7 @@ package rezende.israel.isnote.ui.activity;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -25,7 +26,10 @@ public class ListaNotasActivity extends AppCompatActivity {
             dao.insere(new Nota("Titulo "+ i, "Descrição "+i));
         }
         List<Nota> todasNotas = dao.todos();
-        listaNotas.setAdapter(new ListaNotasAdapter(todasNotas));
+        listaNotas.setAdapter(new ListaNotasAdapter(todasNotas, this));
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        listaNotas.setLayoutManager(linearLayoutManager);
 
     }
 }
