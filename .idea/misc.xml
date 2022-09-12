@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/layout/activity_formulario_nota.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/activity_lista_notas.xml" value="0.2861271676300578" />
         <entry key="app/src/main/res/layout/item_nota.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/menu_formulario_nota_salva.xml" value="0.35625" />
       </map>
     </option>
   </component>

@@ -34,6 +34,7 @@
         android:layout_height="wrap_content"
         android:hint="Inserir uma nota"
         android:padding="10dp"
+        android:onClick=""
         android:textColor="@android:color/darker_gray"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -7,7 +7,7 @@
     tools:context=".ui.activity.FormularioNotaActivity">
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/formulario_nota_titulo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/formulario_nota_descricao"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -36,7 +36,7 @@
         android:inputType="textPersonName"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintEnd_toEndOf="@+id/formulario_nota_titulo"
+        app:layout_constraintStart_toStartOf="@+id/formulario_nota_titulo"
+        app:layout_constraintTop_toBottomOf="@+id/formulario_nota_titulo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package rezende.israel.isnote.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -34,6 +35,14 @@ public class ListaNotasActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        NotaDAO dao = new NotaDAO();
+        List<Nota> todasNotas = dao.todos();
+        configuraRecyclerView(todasNotas);
+        super.onResume();
     }
 
     private void configuraRecyclerView(List<Nota> todasNotas) {
