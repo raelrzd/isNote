@@ -1,6 +1,7 @@
 package rezende.israel.isnote.recyclerview.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,9 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
 
     private final List<Nota> notas;
     private final Context context;
+    private int quantidadeHoldader = 0;
 
-    public ListaNotasAdapter(List<Nota> notas, Context context) {
+    public ListaNotasAdapter(Context context, List<Nota> notas) {
         this.notas = notas;
         this.context = context;
     }
@@ -27,6 +29,8 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
     @NonNull
     @Override
     public ListaNotasAdapter.NotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        quantidadeHoldader++;
+        Log.i("adapter", "Quantidade de Holder criada: "+ quantidadeHoldader);
         View viewCriada = criaView(parent);
         return new NotaViewHolder(viewCriada);
     }

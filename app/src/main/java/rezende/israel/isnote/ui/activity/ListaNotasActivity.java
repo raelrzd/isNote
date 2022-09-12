@@ -2,7 +2,6 @@ package rezende.israel.isnote.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -18,11 +17,14 @@ import rezende.israel.isnote.recyclerview.adapter.ListaNotasAdapter;
 
 public class ListaNotasActivity extends AppCompatActivity {
 
+    private ListaNotasAdapter adapter;
+    private List<Nota> todasNotas;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_notas);
-        List<Nota> todasNotas = notasDeExemplo();
+        todasNotas = notasDeExemplo();
         configuraRecyclerView(todasNotas);
 
         EditText botaoInsereNota = findViewById(R.id.lista_notas_insere_nota);
@@ -33,6 +35,7 @@ public class ListaNotasActivity extends AppCompatActivity {
                 Intent intent = new Intent(ListaNotasActivity.this, FormularioNotaActivity.class);
                 startActivity(intent);
             }
+
         });
 
     }
@@ -40,8 +43,9 @@ public class ListaNotasActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         NotaDAO dao = new NotaDAO();
-        List<Nota> todasNotas = dao.todos();
-        configuraRecyclerView(todasNotas);
+        todasNotas.clear();
+        todasNotas.addAll(dao.todos());
+        adapter.notifyDataSetChanged();
         super.onResume();
     }
 
@@ -51,7 +55,8 @@ public class ListaNotasActivity extends AppCompatActivity {
     }
 
     private void configuraAdapter(List<Nota> todasNotas, RecyclerView listaNotas) {
-        listaNotas.setAdapter(new ListaNotasAdapter(todasNotas, this));
+        adapter = new ListaNotasAdapter(this, todasNotas);
+        listaNotas.setAdapter(adapter);
     }
 
     private List<Nota> notasDeExemplo() {
