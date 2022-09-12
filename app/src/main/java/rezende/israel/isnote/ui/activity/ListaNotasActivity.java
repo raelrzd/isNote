@@ -1,6 +1,9 @@
 package rezende.israel.isnote.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +23,17 @@ public class ListaNotasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_notas);
         List<Nota> todasNotas = notasDeExemplo();
         configuraRecyclerView(todasNotas);
+
+        EditText botaoInsereNota = findViewById(R.id.lista_notas_insere_nota);
+
+        botaoInsereNota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ListaNotasActivity.this, FormularioNotaActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void configuraRecyclerView(List<Nota> todasNotas) {
