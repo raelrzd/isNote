@@ -1,5 +1,6 @@
 package rezende.israel.isnote.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,8 +38,9 @@ public class FormularioNotaActivity extends AppCompatActivity {
             EditText titulo = findViewById(R.id.formulario_nota_titulo);
             EditText descricao = findViewById(R.id.formulario_nota_descricao);
             Nota notaCriada = new Nota(titulo.getText().toString(), descricao.getText().toString());
-            NotaDAO notas = new NotaDAO();
-            notas.insere(notaCriada);
+            Intent resultadoInsercao = new Intent();
+            resultadoInsercao.putExtra("nota", notaCriada);
+            setResult(2,resultadoInsercao);
             finish();
         }
         return super.onOptionsItemSelected(item);

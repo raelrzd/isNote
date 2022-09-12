@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.Serializable;
 import java.util.List;
 
 import rezende.israel.isnote.R;
@@ -32,8 +34,8 @@ public class ListaNotasActivity extends AppCompatActivity {
         botaoInsereNota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ListaNotasActivity.this, FormularioNotaActivity.class);
-                startActivity(intent);
+                Intent iniciaFormularioNota = new Intent(ListaNotasActivity.this, FormularioNotaActivity.class);
+                startActivityForResult(iniciaFormularioNota, 1);
             }
 
         });
@@ -41,11 +43,17 @@ public class ListaNotasActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 1 && resultCode == 2 && data.hasExtra("nota")){
+            Nota notaRecebida = (Nota) data.getSerializableExtra("nota");
+            new NotaDAO().insere(notaRecebida);
+            adapter.adiciona(notaRecebida);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     protected void onResume() {
-        NotaDAO dao = new NotaDAO();
-        todasNotas.clear();
-        todasNotas.addAll(dao.todos());
-        adapter.notifyDataSetChanged();
         super.onResume();
     }
 
