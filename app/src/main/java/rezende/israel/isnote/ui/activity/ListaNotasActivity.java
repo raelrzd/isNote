@@ -19,7 +19,7 @@ import rezende.israel.isnote.R;
 import rezende.israel.isnote.dao.NotaDAO;
 import rezende.israel.isnote.model.Nota;
 import rezende.israel.isnote.recyclerview.adapter.ListaNotasAdapter;
-import rezende.israel.isnote.recyclerview.adapter.OnItemClickListener;
+import rezende.israel.isnote.recyclerview.adapter.listener.OnItemClickListener;
 
 public class ListaNotasActivity extends AppCompatActivity {
 
@@ -52,6 +52,9 @@ public class ListaNotasActivity extends AppCompatActivity {
 
     private List<Nota> pegaTodasNotas() {
         NotaDAO dao = new NotaDAO();
+        for (int i=0; i < 10; i++){
+            dao.insere(new Nota("Titulo " + (i+1), "Descrição "+(i+1)));
+        }
         return dao.todos();
     }
 

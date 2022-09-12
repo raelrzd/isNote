@@ -13,6 +13,7 @@ import java.util.List;
 
 import rezende.israel.isnote.R;
 import rezende.israel.isnote.model.Nota;
+import rezende.israel.isnote.recyclerview.adapter.listener.OnItemClickListener;
 
 public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.NotaViewHolder> {
 

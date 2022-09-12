@@ -1,4 +1,4 @@
-package rezende.israel.isnote.recyclerview.adapter;
+package rezende.israel.isnote.recyclerview.adapter.listener;
 
 public interface OnItemClickListener {
     void onItemClick();
