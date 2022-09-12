@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import rezende.israel.isnote.R;
 import rezende.israel.isnote.dao.NotaDAO;
 import rezende.israel.isnote.model.Nota;
 import rezende.israel.isnote.recyclerview.adapter.ListaNotasAdapter;
+import rezende.israel.isnote.recyclerview.adapter.OnItemClickListener;
 
 public class ListaNotasActivity extends AppCompatActivity {
 
@@ -91,5 +93,11 @@ public class ListaNotasActivity extends AppCompatActivity {
     private void configuraAdapter(List<Nota> todasNotas, RecyclerView listaNotas) {
         adapter = new ListaNotasAdapter(this, todasNotas);
         listaNotas.setAdapter(adapter);
+        adapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+                Toast.makeText(ListaNotasActivity.this, "ViewHolder clicado na activity", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
