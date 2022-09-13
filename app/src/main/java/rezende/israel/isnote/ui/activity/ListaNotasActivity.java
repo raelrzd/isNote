@@ -3,9 +3,9 @@ package rezende.israel.isnote.ui.activity;
 import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.CHAVE_POSICAO;
 import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.CODIGO_REQUISICAO_ALTERA_NOTA;
 import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.CODIGO_REQUISICAO_INSERE_NOTA;
-import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.CODIGO_RESULTADO_NOTA_CRIADA;
 import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.POSICAO_INVALIDA;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -63,19 +63,23 @@ public class ListaNotasActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (ehResultadoComNota(requestCode, resultCode, data)) {
-            Nota notaRecebida = (Nota) data.getSerializableExtra(CHAVE_NOTA);
-            adiciona(notaRecebida);
-            ToastNotaSalva(notaRecebida);
-        }
-        if (ehResultadoAlteraNota(requestCode, resultCode, data)) {
-            Nota notaRecebida = (Nota) data.getSerializableExtra(CHAVE_NOTA);
-            int posicaoRecebida = data.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
-            if (ehPosicaoValida(posicaoRecebida)) {
-                altera(notaRecebida, posicaoRecebida);
+        if (ehResultadoInsereNota(requestCode, data)) {
+            if(resultadoOk(resultCode)){
+                Nota notaRecebida = (Nota) data.getSerializableExtra(CHAVE_NOTA);
+                adiciona(notaRecebida);
                 ToastNotaSalva(notaRecebida);
-            } else {
-                Toast.makeText(this, "Ocorreu um problema na alteração da nota", Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (ehResultadoAlteraNota(requestCode, data)) {
+            if(resultadoOk(resultCode)){
+                Nota notaRecebida = (Nota) data.getSerializableExtra(CHAVE_NOTA);
+                int posicaoRecebida = data.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
+                if (ehPosicaoValida(posicaoRecebida)) {
+                    altera(notaRecebida, posicaoRecebida);
+                    ToastNotaSalva(notaRecebida);
+                } else {
+                    Toast.makeText(this, "Ocorreu um problema na alteração da nota", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -94,8 +98,8 @@ public class ListaNotasActivity extends AppCompatActivity {
         Toast.makeText(this, "Salvo " + notaRecebida.getTitulo(), Toast.LENGTH_SHORT).show();
     }
 
-    private boolean ehResultadoAlteraNota(int requestCode, int resultCode, @Nullable Intent data) {
-        return ehCodigoRequisicaoAlteraNota(requestCode) && ehCodigoResultadoNotaCriada(resultCode) && temNota(data);
+    private boolean ehResultadoAlteraNota(int requestCode, @Nullable Intent data) {
+        return ehCodigoRequisicaoAlteraNota(requestCode) && temNota(data);
     }
 
     private boolean ehCodigoRequisicaoAlteraNota(int requestCode) {
@@ -107,16 +111,16 @@ public class ListaNotasActivity extends AppCompatActivity {
         adapter.adiciona(nota);
     }
 
-    private boolean ehResultadoComNota(int requestCode, int resultCode, @Nullable Intent data) {
-        return ehCodigoRequisicaoInsereNota(requestCode) && ehCodigoResultadoNotaCriada(resultCode) && temNota(data);
+    private boolean ehResultadoInsereNota(int requestCode, @Nullable Intent data) {
+        return ehCodigoRequisicaoInsereNota(requestCode) && temNota(data);
     }
 
     private boolean temNota(@Nullable Intent data) {
         return data.hasExtra(CHAVE_NOTA);
     }
 
-    private boolean ehCodigoResultadoNotaCriada(int resultCode) {
-        return resultCode == CODIGO_RESULTADO_NOTA_CRIADA;
+    private boolean resultadoOk(int resultCode) {
+        return resultCode == Activity.RESULT_OK;
     }
 
     private boolean ehCodigoRequisicaoInsereNota(int requestCode) {

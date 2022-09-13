@@ -2,9 +2,9 @@ package rezende.israel.isnote.ui.activity;
 
 import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.CHAVE_NOTA;
 import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.CHAVE_POSICAO;
-import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.CODIGO_RESULTADO_NOTA_CRIADA;
 import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.POSICAO_INVALIDA;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -68,7 +68,7 @@ public class FormularioNotaActivity extends AppCompatActivity {
         Intent resultadoInsercao = new Intent();
         resultadoInsercao.putExtra(CHAVE_NOTA, notaCriada);
         resultadoInsercao.putExtra(CHAVE_POSICAO, posicaoRecebida);
-        setResult(CODIGO_RESULTADO_NOTA_CRIADA, resultadoInsercao);
+        setResult(Activity.RESULT_OK, resultadoInsercao);
     }
 
     @NonNull
