@@ -1,42 +1,51 @@
 package rezende.israel.isnote.ui.activity;
 
 import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.CHAVE_NOTA;
+import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.CHAVE_POSICAO;
 import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.CODIGO_RESULTADO_NOTA_CRIADA;
+import static rezende.israel.isnote.ui.activity.NotaActivityConstantes.POSICAO_INVALIDA;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.Serializable;
 
 import rezende.israel.isnote.R;
 import rezende.israel.isnote.model.Nota;
 
 public class FormularioNotaActivity extends AppCompatActivity {
 
-    private int posicaoRecebida;
+
+    private int posicaoRecebida = POSICAO_INVALIDA;
+    private EditText titulo;
+    private EditText descricao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_nota);
+        inicializaCampos();
 
         Intent dadosRecebidos = getIntent();
-        if (dadosRecebidos.hasExtra(CHAVE_NOTA) && dadosRecebidos.hasExtra("posicao")){
+        if (dadosRecebidos.hasExtra(CHAVE_NOTA)) {
             Nota notaRecebida = (Nota) dadosRecebidos.getSerializableExtra(CHAVE_NOTA);
-            EditText titulo = findViewById(R.id.formulario_nota_titulo);
-            titulo.setText(notaRecebida.getTitulo());
-            EditText descricao = findViewById(R.id.formulario_nota_descricao);
-            descricao.setText(notaRecebida.getDescricao());
-            posicaoRecebida = dadosRecebidos.getIntExtra("posicao", -1);
+            posicaoRecebida = dadosRecebidos.getIntExtra(CHAVE_POSICAO, POSICAO_INVALIDA);
+            preencheCampos(notaRecebida);
         }
+    }
+
+    private void preencheCampos(Nota notaRecebida) {
+        titulo.setText(notaRecebida.getTitulo());
+        descricao.setText(notaRecebida.getDescricao());
+    }
+
+    private void inicializaCampos() {
+        titulo = findViewById(R.id.formulario_nota_titulo);
+        descricao = findViewById(R.id.formulario_nota_descricao);
     }
 
     @Override
@@ -58,14 +67,12 @@ public class FormularioNotaActivity extends AppCompatActivity {
     private void retornaNota(Nota notaCriada) {
         Intent resultadoInsercao = new Intent();
         resultadoInsercao.putExtra(CHAVE_NOTA, notaCriada);
-        resultadoInsercao.putExtra("posicao", posicaoRecebida);
+        resultadoInsercao.putExtra(CHAVE_POSICAO, posicaoRecebida);
         setResult(CODIGO_RESULTADO_NOTA_CRIADA, resultadoInsercao);
     }
 
     @NonNull
     private Nota criaNota() {
-        EditText titulo = findViewById(R.id.formulario_nota_titulo);
-        EditText descricao = findViewById(R.id.formulario_nota_descricao);
         return new Nota(titulo.getText().toString(), descricao.getText().toString());
     }
 
