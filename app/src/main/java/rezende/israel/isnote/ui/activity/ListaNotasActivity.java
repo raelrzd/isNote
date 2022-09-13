@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import rezende.israel.isnote.dao.NotaDAO;
 import rezende.israel.isnote.model.Nota;
 import rezende.israel.isnote.recyclerview.adapter.ListaNotasAdapter;
 import rezende.israel.isnote.recyclerview.adapter.listener.OnItemClickListener;
+import rezende.israel.isnote.recyclerview.helper.callback.NotaItemTouchHelperCallback;
 
 public class ListaNotasActivity extends AppCompatActivity {
 
@@ -130,6 +132,9 @@ public class ListaNotasActivity extends AppCompatActivity {
     private void configuraRecyclerView(List<Nota> todasNotas) {
         RecyclerView listaNotas = findViewById(R.id.lista_notas_recyclerview);
         configuraAdapter(todasNotas, listaNotas);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new NotaItemTouchHelperCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(listaNotas);
     }
 
     private void configuraAdapter(List<Nota> todasNotas, RecyclerView listaNotas) {
