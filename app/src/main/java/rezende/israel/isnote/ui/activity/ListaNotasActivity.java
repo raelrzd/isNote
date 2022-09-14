@@ -57,9 +57,6 @@ public class ListaNotasActivity extends AppCompatActivity {
 
     private List<Nota> pegaTodasNotas() {
         NotaDAO dao = new NotaDAO();
-        for (int i = 0; i < 10; i++) {
-            dao.insere(new Nota("Titulo " + (i + 1), "Descrição " + (i + 1)));
-        }
         return dao.todos();
     }
 
@@ -79,8 +76,6 @@ public class ListaNotasActivity extends AppCompatActivity {
                 if (ehPosicaoValida(posicaoRecebida)) {
                     altera(notaRecebida, posicaoRecebida);
                     ToastNotaSalva(notaRecebida);
-                } else {
-                    Toast.makeText(this, "Ocorreu um problema na alteração da nota", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -118,7 +113,7 @@ public class ListaNotasActivity extends AppCompatActivity {
     }
 
     private boolean temNota(@Nullable Intent data) {
-        return data!= null && data.hasExtra(CHAVE_NOTA);
+        return data != null && data.hasExtra(CHAVE_NOTA);
     }
 
     private boolean resultadoOk(int resultCode) {
